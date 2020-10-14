@@ -145,13 +145,15 @@
         <table style='width:100%;border-collapse: collapse;border-spacing: 0;' border='0'>
             <tr>
                 <td style='width:50%;'>
-                    <ol>
-                        Tembusan : <?php foreach ($tembusan as $key) : ?>
-                            <li>
-                                <?= $key ?>
-                            </li>
-                        <?php endforeach ?>
-                    </ol>
+                    <?php if ($surat->tembusan != ''): ?>
+                        <ol>
+                            Tembusan : <?php foreach ($tembusan as $key) : ?>
+                                <li>
+                                    <?= $key ?>
+                                </li>
+                            <?php endforeach ?>
+                        </ol>
+                    <?php endif ?>
                 </td>
                 <td style='width:50%;padding:5px;text-align:justify; border: 1'>
                     <table style='width:100%;border-collapse: collapse;font-size:12px;border-spacing: 0;float:right;'>
@@ -167,7 +169,7 @@
                             ?>
 
                                 <?php 
-                                if ($surat->acc_pejabat != NULL){ ?>
+                                if ($surat->acc_pejabat != NULL && $surat->pej2 == 1){ ?>
                                 <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
                                     <?php echo $keterangan[0] ?>
                                     <br><br>
@@ -185,7 +187,13 @@
                                 <?php }else{ ?>
                                      <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
 
-                                    <?php echo end($keterangan) ?>
+                                    <?php
+                                        if ($surat->keteranganttd == ',') {
+                                            echo "Ditanda tangani secara Elektronik";
+                                        }else{
+                                            echo $keterangan[0];
+                                        }
+                                     ?>
                                     <br><br>
                                     <img width='100px' src='https://chart.googleapis.com/chart?chs=270x270&cht=qr&chld=M|1&choe=UTF-8&chl=192.168.2.30/office/admin/track/<?= $NoSuratnya ?>'>
                                     <br>

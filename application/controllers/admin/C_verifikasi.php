@@ -41,7 +41,7 @@ class C_verifikasi extends CI_Controller
     {
         error_reporting(0);
         $ketua = $this->verifikasi->getKetua();
-        
+
         if ($tipe == 'user') { 
             $this->verifikasi->tipe = $this->session->userdata('id_user');
         }
@@ -70,22 +70,38 @@ class C_verifikasi extends CI_Controller
             // Jika tipe surat Internal
             if ($tipe == 'internal') {
                 // JIka Belum di tanda tangani oleh Pejabat ke 2
-                if ($field->acc_pejabat == NULL && $field->internal == 1 && $field->status_pengiriman == 1) {
-                    $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i>Pejabat Ini </button>";
+                if ($field->acc_pejabat == NULL && $field->internal == 1 && $field->status_pengiriman == 1 && $field->pej2 == 1) {
+                    $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval Pejabat  </button>";
 
                 // Jika Sudah di tanda tangani oleh Pejabat ke 2
-                }elseif ($field->acc_pejabat != NULL && $field->internal == 1){  
+                }elseif ($field->acc_pejabat != NULL && $field->internal == 1 && $field->pej2 == 1){  
+                    
                     // Konfirmasi Ketua Yayasan
                     if  ($this->session->id_user  == $ketuaYayasan && $field->status_pengiriman == 5){
-                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Ketua Yayasan ini</button>";
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval  Ketua Yayasan </button>";
+                    
                     // Konfirmasi Ketua UPK
                     }elseif($this->session->id_user == $ketuaUpk && $field->status_pengiriman == 7) {
-                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Ketua UPK Ini</button>";
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval  Ketua UPK </button>";
+                    
                     // Konfirmasi Pembina Yayasan
-                    }elseif($field->status_pengiriman == 6){
-                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i>Pembina Ini </button>";
+                    }elseif($field->status_pengiriman == 6 && $this->session->pembina == true){
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval Pembina  </button>";
+                    }
+
+                }elseif ($field->internal == 1 && $field->pej2 == 0 && $field->acc_pejabat == NULL ) {
+                      // Konfirmasi Ketua Yayasan
+                    if  ($this->session->id_user  == $ketuaYayasan && $field->status_pengiriman == 5){
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval  Ketua Yayasan </button>";
+                    // Konfirmasi Ketua UPK
+                    }elseif($this->session->id_user == $ketuaUpk && $field->status_pengiriman == 1) {
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval  Ketua UPK </button>";
+                    // Konfirmasi Pembina Yayasan
+                    }elseif($field->status_pengiriman == 6 && $this->session->pembina == true){
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval Pembina  </button>";
                     }
                 }
+
             // Jika Surat Eksternal
             }else{
 
@@ -93,12 +109,12 @@ class C_verifikasi extends CI_Controller
                     $btnConfirm = "";
                 } else {
                     if  ($this->session->id_user  == $ketuaYayasan){
-                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Ketua Yayasan ini</button>";
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval  Ketua Yayasan </button>";
                     }elseif($this->session->id_user == $ketuaUpk) {
                         
-                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Ketua UPK Ini</button>";
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval  Ketua UPK </button>";
                     }else{
-                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i>Pembina Ini </button>";
+                        $btnConfirm = "<button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Konfirmasi Surat'><i class='fas fa-check-circle'></i> Aproval Pembina  </button>";
                     }
                 }
             }
@@ -140,6 +156,7 @@ class C_verifikasi extends CI_Controller
             $row[] = $statusNa;
             $row[] = $button;
             $data[] = $row;
+
         }
 
         $output = array(
@@ -183,23 +200,37 @@ class C_verifikasi extends CI_Controller
         if ($uri == 'internal') {
             // Verifikasi Surat Keluar Internal
             // Jika Belum ACC pejaban Terkait
-            if ($surat->acc_pejabat == NULL) {
-                $statusPengiriman = '7';
-                $data = array(
-                    'acc_pejabat' => $this->session->userdata('id_user')
-                );
-                $accNa = '';
-                $this->verifikasi->update($data, ['id' => $id,]);                
-            // Acc Ketua UPK
-            }elseif ($accNa == $ketua['upk'].',' && $surat->acc_pejabat != NULL) {
-                $statusPengiriman = '5';
-            // Acc ketua Yayasan
-            }elseif ($accNa == $ketua['upk'] . ',' . $ketua['yayasan'] . ',' && $surat->acc_pejabat != NULL) {
-                $statusPengiriman = '6';
-            // Acc Pembina Yayasan
+            if ($surat->pej2 == 0) {
+                // Acc Ketua UPK
+               if ($accNa == $ketua['upk'].',') {
+                    $statusPengiriman = '5';
+                // Acc ketua Yayasan
+                }elseif ($accNa == $ketua['upk'] . ',' . $ketua['yayasan'] . ',') {
+                    $statusPengiriman = '6';
+                // Acc Pembina Yayasan
+                }else{
+                    $statusPengiriman = '0';
+                }
             }else{
-                $statusPengiriman = '0';
+                if ($surat->acc_pejabat == NULL) {
+                    $statusPengiriman = '7';
+                    $data = array(
+                        'acc_pejabat' => $this->session->userdata('id_user')
+                    );
+                    $accNa = '';
+                    $this->verifikasi->update($data, ['id' => $id,]);                
+                // Acc Ketua UPK
+                }elseif ($accNa == $ketua['upk'].',' && $surat->acc_pejabat != NULL) {
+                    $statusPengiriman = '5';
+                // Acc ketua Yayasan
+                }elseif ($accNa == $ketua['upk'] . ',' . $ketua['yayasan'] . ',' && $surat->acc_pejabat != NULL) {
+                    $statusPengiriman = '6';
+                // Acc Pembina Yayasan
+                }else{
+                    $statusPengiriman = '0';
+                }
             }
+           
 
         }else{
 
@@ -218,6 +249,7 @@ class C_verifikasi extends CI_Controller
 
         // var_dump($accNa);
         // var_dump($statusPengiriman);
+
         // Jika Status Tidak Di ACC
         // Jika status di tolak tapi ada revisi
         if ($this->input->post('statusrevisi') == '2') {

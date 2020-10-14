@@ -49,16 +49,19 @@ class C_pdf extends CI_Controller {
 			'lampiran' 		=> $lampiran,
 			'tembusan' 		=> $tembusan,
 			'surat' 		=> $surat,
-			 );
+		);
 
-		// $data['acc'] = $namaAcc;
-		// $mpdf = new \Mpdf\Mpdf(['setAutoTopMargin' => 'pad']);
-		// $data = $this->load->view('pdf/surat_keluar', $data, TRUE);
-		// $mpdf->WriteHTML($data);
-		// $mpdf->Output();
+		$data['acc'] = $namaAcc;
+		$mpdf = new \Mpdf\Mpdf([
+			'setAutoTopMargin' => 'pad',
+			'setAutoBottomMargin' => 'pad',
+		]);
+		$data = $this->load->view('pdf/surat_keluar', $data, TRUE);
+		$mpdf->WriteHTML($data);
+		$mpdf->Output();
 
 		// HTML Tanpa dijadikan PDF
-		$this->load->view('pdf/surat_keluar', $data, FALSE);
+		// $this->load->view('pdf/surat_keluar', $data, FALSE);
 	
 	}
 

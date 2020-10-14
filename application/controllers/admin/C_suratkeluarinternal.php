@@ -58,6 +58,20 @@ class C_suratkeluarinternal extends CI_Controller
                 <button class='btn btn-danger btn-sm' id='delete' data-id='$idNa' title='Hapus Surat'><i class='fas fa-trash-alt'></i></button>";
             }
 
+            // Jika SUrat Keluar Dikembalikan
+            if ($field->status_pengiriman == '2') {
+                $statusNa= "<span style='color: black'>Dikembalikan / Revisi</span>";
+
+                $button = "
+                <button class='btn btn-warning btn-sm' id='edit' data-id='$idNa' title='Revisi Surat'><i class='fas fa-pencil-alt'></i></button>
+                ";
+            }
+
+            // Disetujui Ketua Yayasan
+            if ($field->status_pengiriman == '6') {
+                $statusNa = "<span style='color: green'>Disetujui Ketua Yayasan</span>";
+            }
+
             // Jika Surat Keluar Selesai
             if ($field->status_pengiriman == '0') {
                 $statusNa= "<span style='color: green'>Selesai</span>";
@@ -71,7 +85,6 @@ class C_suratkeluarinternal extends CI_Controller
                 $statusNa = "<span style='color: red'>Tidak Disetujui</span>";
 
                 $button = "
-                <button class='btn btn-danger btn-sm' id='delete' data-id='$idNa' title='Hapus Surat'><i class='fas fa-trash-alt'></i></button>
                 <button class='btn btn-info btn-sm' id='arsip' data-id='$idNa' title='Lihat Berkas'><i class='fas fa-file-archive' title='Lihat Berkas' ></i></button>";
             }
 
@@ -189,21 +202,32 @@ class C_suratkeluarinternal extends CI_Controller
         $ket2 = $this->input->post('keteranganttd2');
         $keteranganttdNa = "$ket1,$ket2";
 
+        if ($pejabat2 != '') {
+            // Jika Pejabat 2 Kosong
+            $pej2 = 1;
+        }else{
+            // Jika pejabat 2 Tidak Kosong
+            $pej2 = 0;
+        }
+
+
         $custom = [
-            'jenis_surat' => $id[1],
-            'persetujuan2' => false,
-            'ttd_pejabat' => false,
-            'keteranganttd2' => false,
-            'keteranganttd' => $keteranganttdNa,
-            'persetujuan' => $persetujuan,
-            'asal_surat' => $this->session->upk,
-            'id_upk' => $this->session->upk,
-            'id_user' => $this->session->id_user,
-            'notif' => $buatNotif
+            'jenis_surat'       => $id[1],
+            'persetujuan2'      => false,
+            'ttd_pejabat'       => false,
+            'keteranganttd2'    => false,
+            'pej2'              => $pej2,
+            'keteranganttd'     => $keteranganttdNa,
+            'persetujuan'       => $persetujuan,
+            'asal_surat'        => $this->session->upk,
+            'id_upk'            => $this->session->upk,
+            'id_user'           => $this->session->id_user,
+            'notif'             => $buatNotif
         ];
 
         $data = $this->req->all($custom);
 
+        // echo $pej2;
         // var_dump($data);
         if ($this->surat->insert($data) == true) {
 

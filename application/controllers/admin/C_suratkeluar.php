@@ -64,6 +64,14 @@ class C_suratkeluar extends CI_Controller
                 ";
             }
 
+
+            // Disetujui Ketua Yayasan
+            if ($field->status_pengiriman == '6') {
+                $statusNa = "<span style='color: green'>Disetujui Ketua Yayasan</span>";
+
+                $button = "<button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas' ><i class='fas fa-eye'></i></button>";
+            }
+
             // Jika SUrat Keluar Dikembalikan
             if ($field->status_pengiriman == '2') {
                 $statusNa= "<span style='color: black'>Dikembalikan / Revisi</span>";
@@ -86,7 +94,6 @@ class C_suratkeluar extends CI_Controller
                 $statusNa = "<span style='color: red'>Tidak Disetujui</span>";
 
                 $button = "
-                <button class='btn btn-danger btn-sm' id='delete' data-id='$idNa' title='Hapus Surat'><i class='fas fa-trash-alt'></i></button>
                 <button class='btn btn-info btn-sm' id='arsip' data-id='$idNa' title='Lihat Berkas'><i class='fas fa-file-archive' title='Lihat Berkas' ></i></button>
                 ";
             }
@@ -101,13 +108,14 @@ class C_suratkeluar extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $field->no_surat;
+            $row[] = "<b>  {$field->no_surat}  </b>";
             $row[] = $field->tanggal_dibuat;
             $row[] = $field->upk;
             $row[] = $field->jenis;
             $row[] = $field->sifat;
             $row[] = $field->perihal;
             $row[] = $statusNa;
+            // $row[] = $field->status_pengiriman;
             $row[] = $button;
             $data[] = $row;
         }
@@ -325,7 +333,7 @@ class C_suratkeluar extends CI_Controller
         
         $accNaNa = explode(',', $cekSuratNa->acc);
 
-        $this->req->print($accNaNa);
+        // $this->req->print($accNaNa);
         
 
         // Jika ada

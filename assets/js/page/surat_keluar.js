@@ -193,27 +193,27 @@ $("#formRevisiSurat").submit(function (e) {
 
 $('#list_surat').on('click', '#lihat', function () {
 
-	let id = $(this).data('id');
+	let id = $(this).data('id')
+	let html = ""
 	$.ajax({
 		url: baseUrl + 'admin/verifikasi/aksi/lihat/' + id,
 		type: "GET",
-		success: function (result) {
-			
-			let html = ""
-			
-				html = `
-					<div class="col-md-12">
-						<embed id="nempoFile" src="${baseUrl}/admin/verifikasi/aksi/lihat/${id}" width="100%" height="400" type="">
-					</div>
-				`
-			
-			$("#lampiranNa").html(html)
+		beforeSend: function(){
 			$("#modalLihat").modal('show')
-			
+			$("#lampiranNa").html('<div class="w-100 text-center"><span class="spinner-border spinner-border-xl" role="status" aria-hidden="true"></span></div>')
+		},
+		success: function (result) {
+			html = `
+				<div class="col-md-12">
+					<embed id="nempoFile" src="${baseUrl}/admin/verifikasi/aksi/lihat/${id}" width="100%" height="400" type="">
+				</div>
+			`
 		},
 		error: function (error) {
 			errorCode(error)
 		}
+	}).done(function(){
+		$("#lampiranNa").html(html)
 	})
 })
 

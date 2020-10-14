@@ -93,7 +93,7 @@ class C_suratinternal extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $field->no_surat;
+            $row[] = "<b>  {$field->no_surat}  </b>";
             $row[] = $field->tanggal_dibuat;
             $row[] = $field->jenis;
             $row[] = $field->perihal;

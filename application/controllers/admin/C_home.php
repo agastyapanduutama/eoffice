@@ -19,6 +19,8 @@ class C_home extends CI_Controller {
     public function home()
     {
 
+        // $this->req->print($_SESSION);
+
         $quote = $this->db->query("SELECT * FROM t_quotes ORDER BY RAND ()")->row();
 
         $data = array(

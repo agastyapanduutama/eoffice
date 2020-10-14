@@ -38,6 +38,15 @@ class C_login extends CI_Controller
             $userData = $this->M_login->getData();
             if ($userData->status == 1) {
                 $token = $this->req->acak(($this->M_login->token . $user . time()));
+                $jabatan = $this->db->get_where('t_jabatan', ['id' => $userData->id_jabatan]);
+                $pembina = false;
+                if($jabatan->num_rows() > 0){
+                    $source = $jabatan->row();
+                    if($source->kode_jabatan == "PBNYSN")
+                       $pembina = true;
+                }
+
+                // var_dump($pembina);
                 $session = array(
                     'id_user' => $userData->id,
                     'username' => $userData->username,
@@ -46,6 +55,7 @@ class C_login extends CI_Controller
                     'jabatan' => $userData->id_jabatan,
                     'upk' => $userData->id_upk,
                     'nama_user' => $userData->nama_user,
+                    'pembina' => $pembina,
                     $token => true,
                     'token' => $token
                 );

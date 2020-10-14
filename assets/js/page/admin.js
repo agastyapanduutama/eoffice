@@ -300,6 +300,7 @@ function getNotif() {
           $("#bell").addClass("beep")
         }
       } else {
+        $("#bell").removeClass("beep")
         notif += `
           <a href="#" class="dropdown-item">
               <div class="text-center w-100">
