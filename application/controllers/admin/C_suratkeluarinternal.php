@@ -70,6 +70,8 @@ class C_suratkeluarinternal extends CI_Controller
             // Disetujui Ketua Yayasan
             if ($field->status_pengiriman == '6') {
                 $statusNa = "<span style='color: green'>Disetujui Ketua Yayasan</span>";
+
+                $button = "<button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas' ><i class='fas fa-eye'></i></button>";
             }
 
             // Jika Surat Keluar Selesai
@@ -90,7 +92,9 @@ class C_suratkeluarinternal extends CI_Controller
 
             // Jika Surat Keluar di ACC Ketua UPK
             if ($field->status_pengiriman == '5') {
-                $statusNa = "<span style='color: green'>Disetujui Ketua UPK</span>";              
+                $statusNa = "<span style='color: green'>Disetujui Ketua UPK</span>";    
+                
+                $button = "<button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas' ><i class='fas fa-eye'></i></button>";          
             }
             // Jika Surat Keluar di ACC Jabatan Terkait
             if ($field->status_pengiriman == '7') {
@@ -102,7 +106,8 @@ class C_suratkeluarinternal extends CI_Controller
             $row[] = $no;
             $row[] = $field->no_surat;
             $row[] = $field->tanggal_dibuat;
-            $row[] = $field->upk;
+            // $row[] = $field->upk;
+            $row[] = $field->asal_surat;
             $row[] = $field->jenis;
             $row[] = $field->sifat;
             $row[] = $field->perihal;
@@ -136,6 +141,19 @@ class C_suratkeluarinternal extends CI_Controller
     {
         $upk = $this->db->get_where('t_upk', ['id' => $this->session->upk])->row();
         echo json_encode($upk);
+    }
+
+    function getAsalNa()
+    {
+        $userData = $this->db->get_where('t_user', ['id' => $this->session->id_user])->row();
+        $jabatan = [
+            'id' => $userData->id_jabatan,
+            'upk' => $this->db->get_where('t_upk', ['id' => $userData->id_upk])->row()->upk,
+            'name' => $this->db->get_where('t_jabatan', ['id' => $userData->id_jabatan])->row()->jabatan,
+            'user' => $this->session->nama_user
+        ];
+        echo json_encode($jabatan);
+        // var_dump($jabatan);
     }
 
     function getUpk()
@@ -219,7 +237,7 @@ class C_suratkeluarinternal extends CI_Controller
             'pej2'              => $pej2,
             'keteranganttd'     => $keteranganttdNa,
             'persetujuan'       => $persetujuan,
-            'asal_surat'        => $this->session->upk,
+            // 'asal_surat'        => $this->session->upk,
             'id_upk'            => $this->session->upk,
             'id_user'           => $this->session->id_user,
             'notif'             => $buatNotif

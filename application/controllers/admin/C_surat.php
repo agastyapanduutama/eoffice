@@ -129,6 +129,7 @@ class C_surat extends CI_Controller
                 }elseif ($field->disposisi == '2' && $field->status_suratmasuk = '1' && $field->internal == '1' && $field->sts == '1' ) {
                     $button = "
                     <button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas'><i class='fas fa-eye' ></i></button>
+
                     ";
                 }elseif($field->disposisi == '2' && $field->status_suratmasuk = '1' && $field->internal == '1'){
                     $button = "
@@ -138,6 +139,7 @@ class C_surat extends CI_Controller
                     ";
                 } else {
                     $button = "<button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas'><i class='fas fa-eye' title='Lihat Berkas' ></i></button>
+                      <button class='btn btn-success btn-sm' id='confirmMasuk' data-id='$idNa' title='Disposisi Surat Internal'><i class='fas fa-check-circle' ></i></button>
                     <button class='btn btn-info btn-sm' id='arsip' data-id='$idNa' title='Arsipkan Surat'><i class='fas fa-file-archive' title='Arsipkan Surat' ></i></button>";
                 }
             } else {

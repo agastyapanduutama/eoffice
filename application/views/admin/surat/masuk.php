@@ -56,13 +56,13 @@
                     <input type="hidden" name="id_upk" value="<?= $this->session->userdata('upk');?>" id="id_uPK" class="form-control">
                     <input type="hidden" name="status_suratmasuk" value="1" id="status_surat" class="form-control">
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Jenis Surat Internal / Eksternal</label>
                         <select class="form-control" name="internal">
                             <option value="1">Internal</option>
                             <option value="0">Eksternal</option>
                         </select>
-                    </div>
+                    </div> -->
 
 
                     <div class="form-group">

@@ -25,7 +25,7 @@
 <body style="font-family: Helvetica; font-size: 10pt;">
 
 
-<!-- Header -->
+    <!-- Header -->
     <table style="width:100%;border-collapse: collapse;" border="1">
         <tr>
             <td style="padding:5px;font-size:12px;text-align:left;vertical-align:top;">
@@ -37,7 +37,7 @@
         </tr>
     </table>
 
-     <table style="width:100%;border-collapse: collapse;">
+    <table style="width:100%;border-collapse: collapse;">
         <tr>
             <!-- <td style="width:30%;padding:5px;text-align:center; font-weight:bold;font-size:12px">
                 KEPADA YTH
@@ -48,7 +48,7 @@
         </tr>
     </table>
 
-        <br>
+    <br>
 
 
     <table style="width:100%;border-collapse: collapse;" border="0">
@@ -57,37 +57,37 @@
             <th width="10px"></th>
             <th></th>
         </tr>
-         <tr>
+        <tr>
             <td>DARI</td>
             <td>:</td>
             <td>
-            <?= $surat->asal_surat?>
+                <?= $surat->asal_surat ?>
             </td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td>PERIHAL</td>
             <td>:</td>
             <td>
-            <?= $surat->perihal?>
+                <?= $surat->perihal ?>
             </td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td>TGL SURAT</td>
             <td>:</td>
             <td>
-            <?= $surat->tanggal_dibuat ?>
+                <?= $surat->tanggal_dibuat ?>
             </td>
             <td>TGL TERIMA : <?= $surat->tanggal_surat ?></td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
             <td>NO SURAT</td>
             <td>:</td>
             <td>
-            <?= $surat->no_surat ?>
+                <?= $surat->no_surat ?>
             </td>
-          </tr>
+        </tr>
     </table>
-   
+
     <table style="width:100%;border-collapse: collapse;" border="0">
         <tr>
             <td style="width:20%;">&nbsp;</td>
@@ -99,7 +99,7 @@
             </td>
         </tr>
     </table>
-   
+
     <br>
 
     <table style="width:100%;border-collapse: collapse;" border="1">
@@ -114,28 +114,41 @@
                 DITERUSKAN KEPADA
             </th>
         </tr>
-        <tr >
+        <tr>
             <td width="50%">
-                
-                <?= $surat->isi_disposisi ?>
-                <br><br><br>
-                Catatan :  <br>
-                <?= $surat->catatan ?>
-                
+                <ul>
+                    <?php foreach ($catatan as $key) { ?>
+                        <li>
+                            <?= "$key->nama_user - $key->jabatan" ?>
+                        </li>
+                        <?= "$key->disposisi" ?>
+                    <?php } ?>
+                </ul>
+                <br><br>
+                Catatan : <br>
+                <ul>
+                    <?php foreach ($catatan as $key) { ?>
+                        <li>
+                            <?= "$key->nama_user - $key->jabatan" ?>
+                        </li>
+                        <?= "$key->catatan" ?>
+                    <?php } ?>
+                </ul>
+
             </td>
 
             <td width="50%">
 
-            <?php foreach ($dikirimKepda as $key) { ?>
-                <ul>
-                    <li>
-                        <?= $key?>
-                    </li>
-                </ul>
-            <?php } ?>
-                
+                <?php foreach ($dikirimKepda as $key) { ?>
+                    <ul>
+                        <li>
+                            <?= $key->jabatan ?>
+                        </li>
+                    </ul>
+                <?php } ?>
+
             </td>
         </tr>
-       
+
     </table>
 </body>

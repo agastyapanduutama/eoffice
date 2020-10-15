@@ -149,7 +149,8 @@ class C_verifikasi extends CI_Controller
             $row[] = $no;
             $row[] = $field->no_surat;
             $row[] = $field->tanggal_dibuat;
-            $row[] = $field->upk;
+            $row[] = $field->asal_surat;
+            // $row[] = $field->upk;
             $row[] = $field->jenis;
             $row[] = $field->sifat;
             $row[] = $field->perihal;

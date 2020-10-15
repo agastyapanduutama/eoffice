@@ -191,8 +191,9 @@ class M_suratkeluarinternal extends CI_Model
 
     function data_upk()
     {
-        $this->db->select('*');
+        $this->db->select('id, upk');
         $this->db->from('t_upk');
+        $this->db->where('id !=', $this->session->userdata('upk'));
         $this->db->order_by('id', 'ASC');
         $query = $this->db->get();
         return $query->result();

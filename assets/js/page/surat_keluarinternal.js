@@ -8,6 +8,8 @@ $(document).ready(function () {
 	nomorSurat()
 	getJabatan()
 	getCurUpk()
+	masukinTag("#tembusanNa", "getJabatan")
+
 })
 
 function tampilData() {
@@ -243,8 +245,6 @@ function getJenis() {
 			})
 		}
 	})
-
-
 }
 
 function getAksi() {
@@ -341,10 +341,10 @@ $("#ttd_pejabat").on('change', function() {
 function getCurUpk() {
 	$.ajax({
 		dataType: "json",
-		url: baseUrl + 'admin/surat/internal/keluar/aksi/getCurUpk',
+		url: baseUrl + 'admin/surat/internal/keluar/aksi/getAsalNa',
 		success: function (result) {
 			let response = jQuery.parseJSON(JSON.stringify(result))
-			$("#upkNa").val(response.upk)
+			$("#upkNa").val(`${result.upk} - ${result.name}`)
 		}
 	})
 
@@ -356,6 +356,20 @@ function getCurUpk() {
 			$("#upkNa1").val(response.upk)
 		}
 	})
+
+	$('#tujuanNa').find('option').remove().end()
+	$('#tujuanNa').append("<option value='' selected disabled> -- Silakan Pilih Tujuan -- </option>");
+	$.ajax({
+		dataType: "json",
+		url: baseUrl + "admin/surat/internal/keluar/aksi/getUpk",
+		success: function (result) {
+			let response = jQuery.parseJSON(JSON.stringify(result));
+			response.forEach(item => {
+				$('#tujuanNa').append("<option value='" + item.upk + "'>" + item.upk + "</option>");
+			})
+		}
+	})
+	// $('#tujuanNa').append("<option value=''> Lainnya </option>");
 }
 
 function nomorSurat() {
@@ -381,10 +395,10 @@ function nomorSurat() {
 			})
 			let noUrut = $("#nomorUrutSurat").val()
 			if (noUrut != '') {
-				$("#no_surat1").val(`${noUrut}/${nomorSurat2}/I`)
+				$("#no_surat1").val(`${noUrut}/${nomorSurat2}I`)
 			} else {
-				$("#no_surat").val(`${nomorSurat}/I`)
-				$("#no_surat1").val(`${nomorSurat}/I`)
+				$("#no_surat").val(`${nomorSurat}I`)
+				$("#no_surat1").val(`${nomorSurat}I`)
 			}
 
 		}
@@ -442,4 +456,125 @@ function namaFile() {
 		html += "<input type='text' name='lampiran' class='form-control'><br>Dipisahkan Menggunakan Koma (,)";
 		$("#fileLampiranNa").html(html);
 	}
+}
+
+
+$(document).delegate('#tembusanNa', 'change', function(){
+	// alert("Asdasdasd")
+	let dataNa = JSON.parse($('#tembusanNa').val());
+	let idNa = ''
+	dataNa.forEach(element => {
+		idNa += `${element.value},`
+	});
+	$("input[name='tembusan']").val(idNa)
+	// alert($idNa);
+})
+
+function masukinTag(input, getNa) {
+	(function () {
+		var dataNa = [];
+		var inputElm = document.querySelector(input);
+
+		function tagTemplate(tagData) {
+			return `
+                <tag title="${tagData.email}"
+                        contenteditable='false'
+                        spellcheck='false'
+                        tabIndex="-1"
+                        class="tagify__tag ${tagData.class ? tagData.class : ""}"
+                        ${this.getAttributes(tagData)}>
+                    <x title='' class='tagify__tag__removeBtn' role='button' aria-label='remove tag'></x>
+                    <div>
+                        <div class='tagify__tag__avatar-wrap'>
+                            <img src="${baseUrl}/assets/img/icon.png">
+                        </div>
+                        <span class='tagify__tag-text'>${tagData.name}</span>
+                    </div>
+                </tag>
+            `
+		}
+
+		function suggestionItemTemplate(tagData) {
+			return `
+                <div ${this.getAttributes(tagData)}
+                    class='tagify__dropdown__item ${tagData.class ? tagData.class : ""}'
+                    tabindex="0"
+                    role="option">
+                    ${ baseUrl + `/assets/img/icon.png` ? `
+                    <div class='tagify__dropdown__item__avatar-wrap'>
+                        <img src="${baseUrl}/assets/img/icon.png">
+                    </div>` : ''
+				}
+                    <strong>${tagData.name}</strong>
+                    
+                </div>
+            `
+		}
+
+		$.ajax({
+			dataType: "json",
+			url: baseUrl + `admin/surat/masuk/aksi/${getNa}`,
+			type: 'GET',
+			success: function (result) {
+				result.forEach(element => {
+					dataNa.push({
+						'value': element.value,
+						'name': element.name
+					})
+				});
+			}
+		})
+
+		 // initialize Tagify on the above input node reference
+        var tagify = new Tagify(inputElm, {
+            enforceWhitelist: true,
+            skipInvalid: true, // do not remporarily add invalid tags
+            dropdown: {
+                closeOnSelect: false,
+                enabled: 0,
+                classname: 'users-list',
+                searchKeys: ['name'] // very important to set by which keys to search for suggesttions when typing
+            },
+            templates: {
+                tag: tagTemplate,
+                dropdownItem: suggestionItemTemplate
+            },
+			whitelist: dataNa
+        })
+
+
+
+		tagify.on('dropdown:show dropdown:updated', onDropdownShow)
+		tagify.on('dropdown:select', onSelectSuggestion)
+
+		var addAllSuggestionsElm;
+
+		function onDropdownShow(e) {
+			var dropdownContentElm = e.detail.tagify.DOM.dropdown.content;
+
+			if (tagify.suggestedListItems.length > 1) {
+				addAllSuggestionsElm = getAddAllSuggestionsElm();
+
+				// insert "addAllSuggestionsElm" as the first element in the suggestions list
+				dropdownContentElm.insertBefore(addAllSuggestionsElm, dropdownContentElm.firstChild)
+			}
+		}
+
+		function onSelectSuggestion(e) {
+			if (e.detail.elm == addAllSuggestionsElm)
+				tagify.dropdown.selectAll.call(tagify);
+		}
+
+		// create a "add all" custom suggestion element every time the dropdown changes
+		function getAddAllSuggestionsElm() {
+			// suggestions items should be based on "dropdownItem" template
+			return tagify.parseTemplate('dropdownItem', [{
+				class: "addAll",
+				name: "Add all",
+				email: tagify.settings.whitelist.reduce(function (remainingSuggestions, item) {
+					return tagify.isTagDuplicate(item.value) ? remainingSuggestions : remainingSuggestions + 1
+				}, 0) + " Members"
+			}])
+		}
+	})()
 }

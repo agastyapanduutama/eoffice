@@ -233,7 +233,28 @@ class M_surat extends CI_Model
         $this->db->join('t_aksi', 't_aksi.id = t_surat.aksi_surat', 'left');
         $this->db->where('t_surat.id', $id);
         $this->db->order_by('t_disposisi.id', 'desc');
-        return $this->db->get()->row();
+        $surat = $this->db->get()->row();
+
+        //get catatan sama disposisi
+        $cacatan = $this->db->select("nama_user, jabatan, catatan, isi_disposisi as disposisi")->from("t_disposisi")
+            ->join('t_surat', 't_surat.id = t_disposisi.id_surat')
+            ->join('t_user', 't_user.id = t_disposisi.id_user')
+            ->join('t_jabatan', 't_jabatan.id = t_user.id_jabatan')
+            ->where(['no_surat' => $surat->no_surat])
+            ->get()->result();
+
+        //get diteruskan
+        $diteruskan = $this->db->select("jabatan")->from("t_disposisi")
+            ->join('t_surat', 't_surat.id = t_disposisi.id_surat')
+            ->join('t_jabatan', 't_jabatan.id = t_disposisi.jabatan_terkait')
+            ->where(['no_surat' => $surat->no_surat])
+            ->get()->result();
+
+        return [
+            'surat' => $surat,
+            'catatan' => $cacatan,
+            'diteruskan' => $diteruskan
+        ];
     }
 
     function data_disposisi_internal($id)
@@ -245,8 +266,30 @@ class M_surat extends CI_Model
         $this->db->join('t_aksi', 't_aksi.id = t_surat.aksi_surat', 'left');
         $this->db->where('t_surat.id', $id);
         $this->db->order_by('t_disposisi.id', 'desc');
-        return $this->db->get()->row();
+        $surat = $this->db->get()->row();
 
+        //get catatan sama disposisi
+        $cacatan = $this->db->select("nama_user, jabatan, catatan, isi_disposisi as disposisi")->from("t_disposisi")
+            ->join('t_surat', 't_surat.id = t_disposisi.id_surat')
+            ->join('t_user', 't_user.id = t_disposisi.id_user')
+            ->join('t_jabatan', 't_jabatan.id = t_user.id_jabatan')
+            ->where(['no_surat' => $surat->no_surat])
+            ->get()->result();
+
+        //get diteruskan
+        $diteruskan = $this->db->select("jabatan")->from("t_disposisi")
+            ->join('t_surat', 't_surat.id = t_disposisi.id_surat')
+            ->join('t_jabatan', 't_jabatan.id = t_disposisi.jabatan_terkait')
+            ->where(['no_surat' => $surat->no_surat])
+            ->get()->result();
+
+        // $this->req->print($diteruskan);
+
+        return [
+            'surat' => $surat,
+            'catatan' => $cacatan,
+            'diteruskan' => $diteruskan
+        ];
     }
 
     function data_user()

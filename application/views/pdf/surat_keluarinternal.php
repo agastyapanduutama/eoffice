@@ -1,19 +1,13 @@
-<?php
-// error_reporting(0)
-?>
-
-<base href='{{BASE_URL}}'>
 <style>
     body {
         font-family: Helvetica, sans-serif;
-        /* padding-top: 200px; */
+        font-size: 10pt;
     }
 
     table {
         font-family: Helvetica, sans-serif;
     }
-</style>
-<style>
+
     .barcode {
         padding: 1.5mm;
         margin: 0;
@@ -34,15 +28,28 @@
         /* tinggi dari footer */
         /* background: #6cf; */
     }
+
+    .content {
+        /* background-color: #666; */
+    }
+
+    .tembusan {
+        font-size: 10pt;
+        position: absolute;
+        bottom: 0mm;
+        /* height: 100%; */
+        margin-bottom: 80px;
+        /* background-color: #999; */
+    }
 </style>
 
-<body style='font-family: Helvetica; font-size: 10pt;'>
+<body>
 
     <htmlpageheader name="MyHeader1">
         <table style='width:100%;border-collapse: collapse;' border='0'>
             <tr>
                 <td style='padding:5px;font-size:12px;text-align:left;vertical-align:top;'>
-                    <img src='<?= base_url('uploads/config/logostikes.png') ?>' width='50' alt=''>
+                <img src='<?= base_url('uploads/config/logostikes.png') ?>' width='50' alt=''>
                 </td>
                 <td style='width:100%;padding:5px;text-align:center; '>
                     <h2 style='margin-top:200px'>
@@ -56,6 +63,79 @@
                 </td>
             </tr>
         </table>
+    </htmlpageheader>
+
+    <htmlpagefooter name="MyFooter2">
+        <!-- <h1>hohoho</h1> -->
+    </htmlpagefooter>
+
+    <htmlpagefooter name="MyFooter1">
+        <table style='width:100%;border-collapse: collapse;border-spacing: 0;' border='0'>
+            <tr>
+                <td style='width:50%;'>
+
+                </td>
+                <td style='width:50%;padding:5px;text-align:justify; border: 1'>
+                    <table style='width:100%;border-collapse: collapse;font-size:12px;border-spacing: 0;float:right;'>
+                        <tr>
+                            <?php
+                            // kalo acc ada
+                            $NoSuratnya = str_replace('/', '-', $surat->no_surat);
+                            if (count($acc) > 0 || $surat->status_pengiriman = !4) {
+                                // foreach ($acc as $key => $value) { 
+                            ?>
+
+                                <td>
+                                    <img src='<?= base_url('uploads/config/logostikes.png') ?>' width='50' alt=''>
+                                </td>
+                                <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
+                                    Ditandatangani secara elektronik oleh:
+                                    <br>
+                                    <?php echo end($jabatan) ?>
+                                    <br>
+                                    <img width='100px' src='https://chart.googleapis.com/chart?chs=270x270&cht=qr&chld=M|1&choe=UTF-8&chl=192.168.2.30/office/admin/track/<?= $NoSuratnya ?>'>
+                                    <br>
+
+                                    <?php echo end($depan); echo end($acc); end($belakang); ?>
+
+
+                                </td>
+                            <?php
+                                // }
+
+                                // Kalo belum di acc
+                            } else { ?>
+                                <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
+                                    Ditanadtangani secara elektronik oleh:
+                                    <br><br><br><br><br>
+                                    <!-- Barcode -->
+                                    <br><br><br><br><br>
+                                    Belum di verifikasi / Tidak Disetujui
+                                </td>
+                            <?php } ?>
+                </td>
+            </tr>
+
+        </table>
+        </td>
+        </tr>
+        </table>
+        <table width="100%">
+            <tr>
+                <td width="100%" align="left" style="font-weight: bold;">Halaman {PAGENO} dari {nbpg}</td>
+            </tr>
+        </table>
+    </htmlpagefooter>
+
+    <sethtmlpageheader name="MyHeader1" value="on" show-this-page="1" />
+    <sethtmlpagefooter name="MyFooter1" value="on" />
+    <!-- <sethtmlpagefooter name="MyFooter2" value="1" show-this-page="2" /> -->
+
+    <!-- <div>Start of the document ... and all the rest</div>'; -->
+
+
+    <div class="content">
+        <!-- <br><br> -->
         <table style='width:100%;border-collapse: collapse;' border='0'>
             <tr>
                 <td style='width:20%;'>&nbsp;</td>
@@ -117,112 +197,30 @@
         </td>
         </tr>
         </table>
-    </htmlpageheader>
-
-    <htmlpagefooter name="MyFooter1">
-        <table width="100%">
-            <tr>
-                <td width="100%" align="left" style="font-weight: bold; font-style:;">Halaman {PAGENO} dari {nbpg}</td>
-                <!-- <td width="50%" align="right"><span style=" font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td> -->
-            </tr>
-        </table>
-    </htmlpagefooter>
-
-    <sethtmlpageheader name="MyHeader1" value="on" show-this-page="1" />
-    <sethtmlpagefooter name="MyFooter1" value="on" />
-
-    <!-- <div>Start of the document ... and all the rest</div>'; -->
-
-
-    <div class="content">
-        <br><br><br><br><br><br><br><br><br>
-        <div class='checkbox1'>
+        Kepada Yth. <br>
+        <?= $surat->tujuan?><br>
+        di <br>
+        Tempat
+        <div class="content">
             <?= $surat->isi_surat ?>
         </div>
 
+        <!-- <br><br><br><br><br><br><br> -->
 
-        <br><br><br><br><br><br><br>
-        <table style='width:100%;border-collapse: collapse;border-spacing: 0;' border='0'>
-            <tr>
-                <td style='width:50%;'>
-                    <?php if ($surat->tembusan != ''): ?>
-                        <ol>
-                            Tembusan : <?php foreach ($tembusan as $key) : ?>
-                                <li>
-                                    <?= $key ?>
-                                </li>
-                            <?php endforeach ?>
-                        </ol>
-                    <?php endif ?>
-                </td>
-                <td style='width:50%;padding:5px;text-align:justify; border: 1'>
-                    <table style='width:100%;border-collapse: collapse;font-size:12px;border-spacing: 0;float:right;'>
-                        <tr>
-                             <td>
-                                    <img src='<?= base_url('uploads/config/logostikes.png') ?>' width='50' alt=''>
-                                </td>
-                            <?php
-                            // kalo acc ada
-                            $NoSuratnya = str_replace('/', '-', $surat->no_surat);
-                            if (count($acc) > 0 || $surat->status_pengiriman = !4) {
-                                // foreach ($keterangan as $key => $value) { 
-                            ?>
-
-                                <?php 
-                                if ($surat->acc_pejabat != NULL && $surat->pej2 == 1){ ?>
-                                <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
-                                    <?php echo $keterangan[0] ?>
-                                    <br><br>
-                                    <img width='100px' src='https://chart.googleapis.com/chart?chs=270x270&cht=qr&chld=M|1&choe=UTF-8&chl=192.168.2.30/office/admin/track/<?= $NoSuratnya ?>'><br>
-                                    <?= $pejabat->gelar_depan?> <?= $pejabat->nama_user ?> <?= $pejabat->gelar_belakang?>
-                                </td>  
-
-                                <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
-                                    <?php echo $keterangan[1] ?>
-                                    <br><br>
-                                    <img width='100px' src='https://chart.googleapis.com/chart?chs=270x270&cht=qr&chld=M|1&choe=UTF-8&chl=192.168.2.30/office/admin/track/<?= $NoSuratnya ?>'><br>
-                                    <?= end($depan)?> <?= end($acc); ?> <?= end($belakang)?>
-                                </td>  
-                                
-                                <?php }else{ ?>
-                                     <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
-
-                                    <?php
-                                        if ($surat->keteranganttd == ',') {
-                                            echo "Ditanda tangani secara Elektronik";
-                                        }else{
-                                            echo $keterangan[0];
-                                        }
-                                     ?>
-                                    <br><br>
-                                    <img width='100px' src='https://chart.googleapis.com/chart?chs=270x270&cht=qr&chld=M|1&choe=UTF-8&chl=192.168.2.30/office/admin/track/<?= $NoSuratnya ?>'>
-                                    <br>
-                                    <?= end($depan)?> <?= end($acc); ?> <?= end($belakang)?>
-                                </td> 
-   
-                            <?php }
-                            // Kalo belum di acc
-                            } else { ?>
-                                <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
-                                    Surat 
-                                    <br><br><br><br><br>
-                                    <!-- Barcode -->
-                                    <br><br><br><br><br>
-                                    Belum di verifikasi / Tidak Disetujui
-                                </td>
-                            <?php } ?>
-                </td>
-            </tr>
-
-
-
-
-        </table>
-        </td>
-        </tr>
-        </table>
     </div>
 
+    <?php if ($surat->tembusan != ''): ?>
+    <div class="tembusan">
+        <ol>
+            Tembusan : <?php foreach ($tembusan as $key) : ?>
+                <li>
+                    <?= $key ?>
+                </li>
+            <?php endforeach ?>
+        </ol>
+    </div>    
+    <?php endif ?>
+    
 
     <!-- <div id='footer'>Halaman</div> -->
 

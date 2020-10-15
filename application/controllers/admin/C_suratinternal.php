@@ -23,7 +23,7 @@ class C_suratinternal extends CI_Controller
 
         $user = $this->surat->data_user();
         $data = array(
-            'title'  => 'Surat internal',
+            'title'  => 'Surat Masuk internal',
             'menu'   => 'surat-internal',
             'user'   =>  $user,
             'script' => 'surat_internal',

@@ -2,7 +2,7 @@
     <div class="card-header">
         <h4><?= $title ?></h4>
         <div class="card-header-form">
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalTambah">Buat <?= $title ?></button>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalTambah">Buat Surat Masuk Internal</button>
         </div>
     </div>
 </div>
@@ -62,7 +62,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Buat Surat Masuk (<?= $this->session->nama_user?> - Jabatan)</h5>
+                <h5 class="modal-title">Buat Surat Masuk (<?= $this->session->nama_user?>)</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

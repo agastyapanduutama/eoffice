@@ -197,6 +197,10 @@
         </td>
         </tr>
         </table>
+        Kepada Yth. <br>
+        <?= $surat->tujuan?><br>
+        di <br>
+        Tempat
         <div class="content">
             <?= $surat->isi_surat ?>
         </div>
@@ -213,6 +217,14 @@
                     <?= $key ?>
                 </li>
             <?php endforeach ?>
+        </ol>
+    </div>    
+    <?php endif ?>
+
+    <?php if ($surat->tembusan != ''): ?>
+    <div class="tembusan">
+        <ol>
+                <?php echo $tembusan; ?>
         </ol>
     </div>    
     <?php endif ?>

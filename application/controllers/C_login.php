@@ -40,6 +40,7 @@ class C_login extends CI_Controller
                 $token = $this->req->acak(($this->M_login->token . $user . time()));
                 $jabatan = $this->db->get_where('t_jabatan', ['id' => $userData->id_jabatan]);
                 $pembina = false;
+                $upkLevel = $this->db->get_where('t_upk', ['id' => $userData->id_upk])->row();
                 if($jabatan->num_rows() > 0){
                     $source = $jabatan->row();
                     if($source->kode_jabatan == "PBNYSN")
@@ -56,6 +57,7 @@ class C_login extends CI_Controller
                     'upk' => $userData->id_upk,
                     'nama_user' => $userData->nama_user,
                     'pembina' => $pembina,
+                    'levelUpk' => $upkLevel->level,
                     $token => true,
                     'token' => $token
                 );

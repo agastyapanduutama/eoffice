@@ -90,7 +90,12 @@
 
                      <div class="form-group">
                          <label>Asal Surat</label>
-                         <input type="text" class="form-control" id="upkNa" readonly>
+                         <input type="text" name="asal_surat" class="form-control" id="upkNa" readonly>
+                     </div>
+
+                     <div class="form-group">
+                         <label>Tujuan </label>
+                         <select class="form-control" name="tujuan" id="tujuanNa"></select>
                      </div>
 
                      <div class="form-group">
@@ -103,7 +108,33 @@
                          <select name="sifat_surat" id="id_sifat" class="form-control"></select>
                      </div>
 
-                     <div class="form-group">
+                      <?php if ($this->session->userdata('levelUpk') == '1'){ ?>
+                         <div class="form-group">
+                             <label>Tanda Tangan Pejabat</label>
+                             <select class="form-control" name="ttd_pejabat">
+                                 <option disabled >-- Pilih Tandatangan --</option>
+                                 <!-- <option value="1">ketua UPK</option> -->
+                                 <option value="2" selected>ketua Yayasan</option>
+                                 <?php foreach ($jabatan as $key):?>
+                                 <option value="<?= $key->id?>"> <?= $key->jabatan?> - <?= $key->nama_user?> </option>
+                                 <?php endforeach ?>
+                             </select>
+                         </div>
+                     <?php }else{ ?>
+                         <div class="form-group">
+                             <label>Tanda Tangan Pejabat</label>
+                             <select class="form-control" name="ttd_pejabat">
+                                 <option disabled >-- Pilih Tandatangan --</option>
+                                 <option value="1" selected>ketua UPK</option>
+                                 <!-- <option value="2">ketua Yayasan</option> -->
+                                 <?php foreach ($jabatan as $key):?>
+                                 <!-- <option value="<?= $key->id?>"> <?= $key->jabatan?> - <?= $key->nama_user?> </option> -->
+                                 <?php endforeach ?>
+                             </select>
+                         </div>
+                     <?php } ?>
+
+                     <!-- <div class="form-group">
                          <label>Tanda Tangan Pejabat 1</label>
                          <select class="form-control" name="ttd_pejabat">
                              <option disabled selected>-- Pilih Tandatangan --</option>
@@ -113,7 +144,7 @@
                                  <option value="<?= $key->id?>"> <?= $key->jabatan?> - <?= $key->nama_user?> </option>
                              <?php endforeach ?>
                          </select>
-                     </div>
+                     </div> -->
 
                      <div class="form-group">
                          <label>Keterangan Tanda Tangan 1(opsional)</label>
@@ -148,8 +179,9 @@
 
                      <div class="form-group">
                          <label>Tembusan</label>
-                         <input type="text" name="tembusan" class="form-control">
-                         <br>Dipisahkan Menggunakan Koma (,)
+                         <input type="text" id="tembusanNa">
+                         <input type="hidden" name="tembusan" class="form-control">
+                         <!-- <br>Dipisahkan Menggunakan Koma (,) -->
                      </div>
 
                      <div class="form-group">

@@ -1,8 +1,8 @@
  <div class="card">
      <div class="card-header">
-         <h4> <?= $title ?></h4>
+         <h4> <?= $title ?> Eksternal</h4>
          <div class="card-header-form float-right">
-             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalTambah">Buat <?= $title ?></button>
+             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalTambah">Buat <?= $title ?> Eksternal</button>
          </div>
 
      </div>
@@ -67,7 +67,7 @@
      <div class="modal-dialog modal-lg" role="document">
          <div class="modal-content">
              <div class="modal-header">
-                 <h5 class="modal-title">Buat Surat Keluar</h5>
+                 <h5 class="modal-title">Buat Surat Keluar Eksternal</h5>
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                  </button>
@@ -89,7 +89,12 @@
 
                      <div class="form-group">
                          <label>Asal Surat</label>
-                         <input type="text" class="form-control" id="upkNa" readonly>
+                         <input type="text" name="asal_surat" class="form-control" id="upkNa" readonly>
+                     </div>
+
+                     <div class="form-group">
+                         <label>Tujuan </label>
+                         <input type="" placeholder="Contoh : Telkom, Bank, DLL" class="form-control" name="tujuan">
                      </div>
 
                      <div class="form-group">
@@ -97,22 +102,38 @@
                          <select name="jenis_surat" id="id_jenis" class="form-control"></select>
                      </div>
 
+
                      <div class="form-group">
                          <label>Sifat Surat</label>
                          <select name="sifat_surat" id="id_sifat" class="form-control"></select>
                      </div>
 
-                     <div class="form-group">
-                         <label>Tanda Tangan Pejabat</label>
-                         <select class="form-control" name="ttd_pejabat">
-                             <option disabled selected>-- Pilih Tandatangan --</option>
-                             <option value="1">ketua UPK</option>
-                             <option value="2">ketua Yayasan</option>
-                             <?php foreach ($jabatan as $key):?>
-                             <option value="<?= $key->id?>"> <?= $key->jabatan?> - <?= $key->nama_user?> </option>
-                             <?php endforeach ?>
-                         </select>
-                     </div>
+                     <?php if ($this->session->userdata('levelUpk') == '1'){ ?>
+                         <div class="form-group">
+                             <label>Tanda Tangan Pejabat</label>
+                             <select class="form-control" name="ttd_pejabat">
+                                 <option disabled >-- Pilih Tandatangan --</option>
+                                 <!-- <option value="1">ketua UPK</option> -->
+                                 <option value="2" selected>ketua Yayasan</option>
+                                 <?php foreach ($jabatan as $key):?>
+                                 <option value="<?= $key->id?>"> <?= $key->jabatan?> - <?= $key->nama_user?> </option>
+                                 <?php endforeach ?>
+                             </select>
+                         </div>
+                     <?php }else{ ?>
+                         <div class="form-group">
+                             <label>Tanda Tangan Pejabat</label>
+                             <select class="form-control" name="ttd_pejabat">
+                                 <option disabled >-- Pilih Tandatangan --</option>
+                                 <option value="1" selected>ketua UPK</option>
+                                 <!-- <option value="2">ketua Yayasan</option> -->
+                                 <?php foreach ($jabatan as $key):?>
+                                 <!-- <option value="<?= $key->id?>"> <?= $key->jabatan?> - <?= $key->nama_user?> </option> -->
+                                 <?php endforeach ?>
+                             </select>
+                         </div>
+                     <?php } ?>
+                   
 
                      <div class="form-group">
                          <label>Apakah Terdapat Lampiran</label>
@@ -131,13 +152,14 @@
 
                      <div class="form-group">
                          <label>Tembusan</label>
-                         <input type="text" name="tembusan" class="form-control">
-                         <br>Dipisahkan Menggunakan Koma (,)
-                     </div>
+                         <input type="text" id="tembusanNa">
+                         <input type="hidden" name="tembusan" class="form-control">
+                         <!-- <br>Dipisahkan Menggunakan Koma (,) -->
+                     </div> 
 
                      <div class="form-group">
                          <label>Perihal</label>
-                         <textarea name="perihal" id="perihal" class="form-control" rows="50"></textarea>
+                         <textarea name="perihal" placeholder="Contoh : Surat Undangan" id="perihal" class="form-control" rows="50"></textarea>
                      </div>
 
                      <div class="form-group">
@@ -192,7 +214,7 @@
      <div class="modal-dialog modal-lg" role="document">
          <div class="modal-content">
              <div class="modal-header">
-                 <h5 class="modal-title">Revisi Surat Keluar</h5>
+                 <h5 class="modal-title">Revisi Surat Keluar Eksternal</h5>
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                  </button>
@@ -239,7 +261,7 @@
 
                      <div class="form-group">
                          <label>Asal Surat</label>
-                         <input type="text" name="" class="form-control" id="upkNa1" readonly>
+                         <input type="text" name="asal_surat" class="form-control" id="upkNa1" readonly>
                      </div>
 
                      <div class="form-group">

@@ -264,7 +264,8 @@
                     <?php if ($this->session->userdata('level') > 2) : ?>
                        
                         
-                       
+                     
+
                         <li class="dropdown nav-item">
                             <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle nav-link-lg nav-link-user active">
                                 <div class="d-lg-inline-block d-md-inline-block d-sm-inline-block d-xs-inline-block"><i class="fas fa-envelope"> </i> Surat
@@ -277,16 +278,14 @@
                                 <a href="<?= base_url('admin/verifikasi') ?>" class="dropdown-item has-icon" id="menu-masuk">
                                     <i class="fas fa-check-circle"></i> Surat Keluar Eksternal
                                 </a>
-
                                 <a href="<?= base_url('admin/verifikasi/internal') ?>" class="dropdown-item has-icon" id="menu-masuk">
                                     <i class="fas fa-check-circle"></i> Surat Keluar Internal
                                 </a>
                                 <a href="#" class="dropdown-item has-icon" id="menu-yayasan">
-                                        Persuratan
+                                        Persuratan Internal
                                 </a>
                                 <!-- <?php var_dump($this->session->userdata('level')) ?> -->
                                 <?php if ($this->session->userdata('level') == 3) : ?>
-                                    
 
                                     <a href="<?= base_url('admin/surat/masuk/internal') ?>" class="dropdown-item has-icon" id="menu-internal">
                                         <i class="fas fa-reply"></i> Persuratan Internal
@@ -306,7 +305,7 @@
                                     </a>
 
                                     <a href="<?= base_url('admin/surat/masuk') ?>" class="dropdown-item has-icon" id="menu-masuk">
-                                        <i class="fas fa-reply"></i> Buat Surat Masuk 
+                                        <i class="fas fa-reply"></i> Terima Surat Masuk 
                                     </a>
 
 

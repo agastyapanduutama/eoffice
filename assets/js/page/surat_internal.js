@@ -354,7 +354,7 @@ function nomorSurat() {
 			Object.keys(format).forEach(key => {
 				nomorSurat = nomorSurat.replace(new RegExp(`{{${key}}}`, "g"), format[key])
 			})
-			$("#no_surat").val(`${nomorSurat}/I`)
+			$("#no_surat").val(`${nomorSurat}I`)
 		}
 	})
 }

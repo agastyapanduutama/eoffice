@@ -64,12 +64,13 @@ class C_suratkeluar extends CI_Controller
                 ";
             }
 
-
             // Disetujui Ketua Yayasan
             if ($field->status_pengiriman == '6') {
                 $statusNa = "<span style='color: green'>Disetujui Ketua Yayasan</span>";
 
-                $button = "<button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas' ><i class='fas fa-eye'></i></button>";
+                $button = "<button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas' ><i class='fas fa-eye'></i></button
+                ";
+
             }
 
             // Jika SUrat Keluar Dikembalikan
@@ -86,7 +87,7 @@ class C_suratkeluar extends CI_Controller
                 $statusNa= "<span style='color: green'>Selesai</span>";
                 
                 $button = "<button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas' ><i class='fas fa-eye'></i></button>
-                <button class='btn btn-info btn-sm' id='arsip' data-id='$idNa' title='Lihat Berkas'><i class='fas fa-file-archive' title='Lihat Berkas' ></i></button>";
+                <button class='btn btn-info btn-sm' id='arsip' data-id='$idNa' title='Arsip Berkas'><i class='fas fa-file-archive' title='Arsip Berkas' ></i></button>";
             }
 
             // Jika Surat Keluar Tidak DIsetujui
@@ -110,7 +111,7 @@ class C_suratkeluar extends CI_Controller
             $row[] = $no;
             $row[] = "<b>  {$field->no_surat}  </b>";
             $row[] = $field->tanggal_dibuat;
-            $row[] = $field->upk;
+            $row[] = $field->asal_surat;
             $row[] = $field->jenis;
             $row[] = $field->sifat;
             $row[] = $field->perihal;
@@ -175,6 +176,20 @@ class C_suratkeluar extends CI_Controller
         echo json_encode($this->surat->data_jabatan($id_upk));
     }
 
+    
+    function getAsalNa()
+    {
+        $userData = $this->db->get_where('t_user', ['id' => $this->session->id_user])->row();
+        $jabatan = [
+            'id' => $userData->id_jabatan,
+            'upk' => $this->db->get_where('t_upk', ['id' => $userData->id_upk])->row()->upk,
+            'name' => $this->db->get_where('t_jabatan', ['id' => $userData->id_jabatan])->row()->jabatan,
+            'user' => $this->session->nama_user
+        ];
+        echo json_encode($jabatan);
+        // var_dump($jabatan);
+    }
+
     function get($id)
     {
         $data = $this->surat->get($id);
@@ -207,13 +222,12 @@ class C_suratkeluar extends CI_Controller
             'jenis_surat' => $id[1],
             'ttd_pejabat' => false,
             'persetujuan' => $persetujuan,
-            'asal_surat' => $this->session->upk,
+            // 'asal_surat' => $this->session->upk,
             'id_upk' => $this->session->upk,
             'id_user' => $this->session->id_user,
             'notif' => $buatNotif
         ];
         
-
         $data = $this->req->all($custom);
         if ($this->surat->insert($data) == true) {
 

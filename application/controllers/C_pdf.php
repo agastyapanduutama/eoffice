@@ -27,6 +27,14 @@ class C_pdf extends CI_Controller {
 		$lampiran = explode(',', $surat->lampiran);
 		$tembusan = explode(',', $surat->tembusan);
 
+		$tembusanNa = [];
+		foreach ($tembusan as $key) {
+			$temb = $this->db->get_where('t_jabatan', ['id' => $key]);
+			if ($temb->num_rows() > 0) {
+				$saos = $temb->row();
+				$tembusanNa = $saos->jabatan;
+			}
+		}
 
 		$namaAcc = [];
 		foreach($acc as $list):
@@ -47,7 +55,7 @@ class C_pdf extends CI_Controller {
 			'belakang' 		=> $gelarBelakangAcc ,
 			'jabatan' 		=> $jabatanNa ,
 			'lampiran' 		=> $lampiran,
-			'tembusan' 		=> $tembusan,
+			'tembusan' 		=> $tembusanNa,
 			'surat' 		=> $surat,
 		);
 
@@ -130,10 +138,10 @@ class C_pdf extends CI_Controller {
 	public function disposisi($id)
 	{
 		$surat = $this->surat->data_disposisi($id);
+		// $this->req->print($surat['catatan']);
 
 
-		$dikirimKepda = explode(",", $surat->jabatan_terkait);
-		$tujuanAwal = explode(",", $surat->aksi_kirim);
+		$tujuanAwal = explode(",", $surat['surat']->aksi_kirim);
 
 		$tujuanNa = [];
 		foreach ($tujuanAwal as $keyNa) {
@@ -143,17 +151,19 @@ class C_pdf extends CI_Controller {
 			}
 		}
 
-		$namaJabatan = [];
+		//get diteruskan dari $surat
+		$namaJabatan = $surat['diteruskan'];    
         
-		foreach ($dikirimKepda as $key) {
-			if ($key != '') {
-				$jab = $this->db->get_where('t_jabatan', ['id' => $key])->row();
-				$namaJabatan[] = $jab->jabatan;
-			}
-		}
+		// foreach ($dikirimKepda as $key) {
+		// 	if ($key != '') {
+		// 		$jab = $this->db->get_where('t_jabatan', ['id' => $key])->row();
+		// 		$namaJabatan[] = $jab->jabatan;
+		// 	}
+		// }
 
 		$datana = array(
-			'surat' => $surat,
+			'surat' => $surat['surat'],
+			'catatan' => $surat['catatan'],
 			'dikirimAwal' => $tujuanNa,
 			'dikirimKepda' => $namaJabatan,
 		);
@@ -170,8 +180,7 @@ class C_pdf extends CI_Controller {
 	{
 		$surat = $this->surat->data_disposisi_internal($id);
 
-		$dikirimKepda = explode(",", $surat->jabatan_terkait);
-		$tujuanAwal = explode(",", $surat->aksi_kirim);
+		$tujuanAwal = explode(",", $surat['surat']->aksi_kirim);
 
 		$tujuanNa = [];
 		foreach ($tujuanAwal as $keyNa) {
@@ -181,16 +190,18 @@ class C_pdf extends CI_Controller {
 			}
 		}
 
-		$namaJabatan = [];        
-		foreach ($dikirimKepda as $key) {
-			if ($key != '') {
-				$jab = $this->db->get_where('t_jabatan', ['id' => $key])->row();
-				$namaJabatan[] = $jab->jabatan;
-			}
-		}
+		//get diteruskan dari $surat
+		$namaJabatan = $surat['diteruskan'];        
+		// foreach ($dikirimKepda as $key) {
+		// 	if ($key != '') {
+		// 		$jab = $this->db->get_where('t_jabatan', ['id' => $key])->row();
+		// 		$namaJabatan[] = $jab->jabatan;
+		// 	}
+		// }
 
 		$datana = array(
-			'surat' => $surat,
+			'surat' => $surat['surat'],
+			'catatan' => $surat['catatan'],
 			'dikirimAwal' => $tujuanNa,
 			'dikirimKepda' => $namaJabatan,
 		);
