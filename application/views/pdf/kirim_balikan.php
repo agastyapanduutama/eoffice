@@ -1,11 +1,11 @@
 <base href="{{BASE_URL}}">
 <style>
     body {
-        font-family: Helvetica, sans-serif;
+        font-family: Times New Roman, sans-serif;
     }
 
     table {
-        font-family: Helvetica, sans-serif;
+        font-family: Times New Roman, sans-serif;
     }
 </style>
 <style>
@@ -22,7 +22,7 @@
     }
 </style>
 
-<body style="font-family: Helvetica; font-size: 10pt;">
+<body style="font-family: Times New Roman; font-size: 10pt;">
 
 
 <!-- Header -->

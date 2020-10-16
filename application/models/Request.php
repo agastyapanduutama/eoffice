@@ -57,13 +57,20 @@ class Request extends CI_Model
         return $this->db->get_where('t_upk', $this->id($id))->row();
     }
 
-    function print($array)
+    function print($array, $clear = true)
     {
-        ob_clean();
-        echo "<pre>";
-        echo print_r($array);
-        echo "</pre>";
-        exit(0);
+        if ($clear == true) {
+            ob_clean();
+            echo "<pre>";
+            echo print_r($array);
+            echo "</pre>";
+            exit(0);
+        } else {
+            echo "<pre>";
+            echo print_r($array);
+            echo "</pre>";
+            exit(0);
+        }
     }
 
     function json($array)
@@ -179,15 +186,32 @@ class Request extends CI_Model
 
     function upload_form_multi($data)
     {
-        $fileName = "";
-        $result = [];
-        $customInput = (isset($data['customInput']) != '') ? $data['customInput'] : null;
-        // $this->print($_FILES[$data['file']]['name']);
+        $fileName = [];
+        // $this->print($data);
         $countfiles = count($_FILES[$data['file']]['name']);
         $success = 0;
+
+        if ($data['encrypt'] == true) {
+            $config_ = array(
+                'upload_path' => './uploads/' . $data['path'],
+                'encrypt_name' => true
+            );
+        } else {
+            $config_ = array(
+                'upload_path' => './uploads/' . $data['path'],
+                'encrypt_name' => false,
+            );
+        }
+
+        // echo $fileNameNa;
+
+        $config = array_merge($config_, $this->uploadTypes[$data['type']]);
+
+        $this->load->library('upload', $config);
+
         for ($i = 0; $i < $countfiles; $i++) {
             if (!empty($_FILES[$data['file']]['name'][$i])) {
-
+                // echo $_FILES[$data['file']]['name'][$i];
                 $fileNameNa = str_replace(["'","`",";","^"], "", $_FILES[$data['file']]['name'][$i]);
 
                 $_FILES['file']['name'] = $fileNameNa;
@@ -196,40 +220,36 @@ class Request extends CI_Model
                 $_FILES['file']['error'] = $_FILES[$data['file']]['error'][$i];
                 $_FILES['file']['size'] = $_FILES[$data['file']]['size'][$i];
 
-                if ($data['encrypt'] != false) {
-                    $config = array(
-                        'upload_path' => './uploads/' . $data['path'],
-                        'encrypt_name' => true
-                    );
-                } else {
-                    $config = array(
-                        'upload_path' => './uploads/' . $data['path'],
-                        'encrypt_name' => false,
-                        'file_name' => time() ."-" . $fileNameNa
-                    );
-                }
-                
-                $config = array_merge($config, $this->uploadTypes[$data['type']]);
+                $config['file_name'] = time() . "-" . $fileNameNa;
 
-                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
 
                 // File upload
                 $uploading = $this->upload->do_upload('file') ? true : false;
+
                 if ($uploading) {
                     // Get data about the file
                     $success++;
                     $uploadData = $this->upload->data();
-                    $fileName .= $uploadData['file_name'] . ",";
+                    $fileName[] = $uploadData['file_name'];
                 } else {
                     return $this->upload->display_errors();
                 }
             }            
         }
-        $fileName = substr($fileName, 0, strlen($fileName) - 1);
-        return $result = [
+
+        $fileNaGan = "";
+        foreach ($fileName as $key) {
+            $fileNaGan .= "$key,";
+        }
+
+        $fileNaGan = substr($fileNaGan, 0, strlen($fileNaGan) - 1);
+        // print_r($fileName);
+
+        return [
             'total' => $countfiles,
             'success' => $success,
-            'data' => array_merge($this->all($data['customInput']), ['lampiran'=> $fileName])
+            'data' => array_merge($this->all($data['customInput']), ['lampiran'=> $fileNaGan])
         ];
     }
 

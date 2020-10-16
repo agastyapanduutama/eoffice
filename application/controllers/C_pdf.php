@@ -11,6 +11,7 @@ class C_pdf extends CI_Controller {
 		$this->load->model('admin/M_suratkeluar', 'keluar');
 		$this->load->model('admin/M_suratkeluarinternal', 'keluarInternal');
 		$this->load->model('admin/M_user', 'user');
+		$this->load->model('admin/M_config', '_config');
 
 	}
 
@@ -22,6 +23,16 @@ class C_pdf extends CI_Controller {
 	public function surat_keluar($id)
 	{
 		$surat = $this->keluar->data_surat($id);
+
+		$namaUpk = $this->_config->get('nama');
+		// print_r($_SESSION);
+
+		$sess = $this->session->userdata('kodeUpk');
+		$namaUpk = $this->_config->get($sess."{}nama");
+		$alamatUpk = $this->_config->get($sess."{}alamat");
+		$telp1Upk = $this->_config->get($sess."{}no_telp_1");
+		$telp2Upk = $this->_config->get($sess."{}no_telp_2");
+		$emailUpk = $this->_config->get($sess."{}email");
 		
 		$acc = explode(',',$surat->acc);		
 		$lampiran = explode(',', $surat->lampiran);
@@ -32,7 +43,7 @@ class C_pdf extends CI_Controller {
 			$temb = $this->db->get_where('t_jabatan', ['id' => $key]);
 			if ($temb->num_rows() > 0) {
 				$saos = $temb->row();
-				$tembusanNa = $saos->jabatan;
+				$tembusanNa[] = $saos->jabatan;
 			}
 		}
 
@@ -55,8 +66,15 @@ class C_pdf extends CI_Controller {
 			'belakang' 		=> $gelarBelakangAcc ,
 			'jabatan' 		=> $jabatanNa ,
 			'lampiran' 		=> $lampiran,
-			'tembusan' 		=> $tembusanNa,
+			'tembusan' 		=> $tembusan,
+			'tembusanNa' 	=> $tembusanNa,
 			'surat' 		=> $surat,
+			// Identitas UPK
+			'namaupk'		=> $namaUpk,
+			'alamatupk'		=> $alamatUpk,
+			'telp1'			=> $telp1Upk,
+			'telp2'			=> $telp2Upk,
+			'emailupk'		=> $emailUpk,
 		);
 
 		$data['acc'] = $namaAcc;
@@ -164,16 +182,20 @@ class C_pdf extends CI_Controller {
 		$datana = array(
 			'surat' => $surat['surat'],
 			'catatan' => $surat['catatan'],
+			'tgl_disposisi' => $surat,
 			'dikirimAwal' => $tujuanNa,
 			'dikirimKepda' => $namaJabatan,
 		);
 
-		$mpdf = new \Mpdf\Mpdf();
-		$data = $this->load->view('pdf/disposisi', $datana, TRUE);
-		$mpdf->WriteHTML($data);
-		$mpdf->Output();
+			// var_dump($datana);
 
-		// $this->load->view('pdf/disposisi', $datana, FALSE);
+
+		// $mpdf = new \Mpdf\Mpdf();
+		// $data = $this->load->view('pdf/disposisi', $datana, TRUE);
+		// $mpdf->WriteHTML($data);
+		// $mpdf->Output();
+
+		$this->load->view('pdf/disposisi', $datana, FALSE);
 	}
 
 	public function disposisi_internal($id)

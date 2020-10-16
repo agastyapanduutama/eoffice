@@ -342,6 +342,7 @@ $route['admin/surat/masuk/aksi/getAksi'] = 'admin/C_surat/getAksi';
 $route['admin/surat/masuk/aksi/getUpk'] = 'admin/C_surat/getUpk';
 $route['admin/surat/masuk/aksi/getJabatan'] = 'admin/C_surat/getJabatan';
 $route['admin/surat/masuk/aksi/getUpkSelected'] = 'admin/C_surat/getUpkSelected';
+$route['admin/surat/masuk/aksi/getSpesifikJabatan'] = 'admin/C_surat/getSpesifikJabatan';
 $route['admin/surat/masuk/aksi/getUser'] = 'admin/C_surat/getUser';
 $route['admin/surat/masuk/aksi/getSifat'] = 'admin/C_surat/getSifat';
 $route['admin/surat/masuk/aksi/getNomorUrut'] = 'admin/C_surat/getNomorUrut';

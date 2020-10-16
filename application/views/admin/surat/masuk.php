@@ -67,7 +67,8 @@
 
                     <div class="form-group">
                         <label>Nomor Surat</label>
-                        <input type="text" name="no_surat" id="no_surat" class="form-control" readonly>
+                        <!-- <input type="text" name="no_surat" id="no_surat" class="form-control" readonly> -->
+                        <input type="text" name="no_surat" id="" class="form-control" placeholder="SM0001/MM/SY/X/2020/E">
                     </div>
                     
 
@@ -77,14 +78,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Tanggal Dibuat</label>
-                        <input type="date" name="tanggal_dibuat" id="tanggal_dibuat" value="<?= date('Y-m-d') ?>" class="form-control" readonly>
+                        <label>Tanggal Surat Diterima</label>
+                        <input type="date" name="tanggal_dibuat" id="tanggal_dibuat" value="<?= date('Y-m-d') ?>" class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label>Asal Surat</label>
-                        <select class="form-control" name="asal_surat" onchange="asalna()" id="asal_surat">
-                        </select>
+                        <input type="text" name="asal_surat" class="form-control">
+                        <!-- <select class="form-control" name="asal_surat" onchange="asalna()" id="asal_surat">
+                        </select> -->
                     </div>
 
                     <div class="form-group" id="asalnasurat">
@@ -120,7 +122,9 @@
 
                     <div class="form-group">
                         <label>Lampiran</label>
-                        <input type="file" name="lampiran[]" multiple="multiple" id="inputGroupFile01" required>
+                        <input type="file" name="lampiran[]" multiple="multiple" accept="application/pdf" id="inputGroupFile01" required>
+                        <br>Lampiran Bisa lebih dari satu
+
                     </div>
 
                     <div class="form-group">

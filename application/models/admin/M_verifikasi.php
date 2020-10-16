@@ -124,7 +124,16 @@ class M_verifikasi extends CI_Model
 
     function get($id)
     {
-        return $this->db->get_where($this->table, $this->req->id($id))->row();
+        // get verifikasi yg baru
+        $surat = $this->db->select('no_surat, tanggal_dibuat, asal_surat, jenis as jenis_surat, sifat as sifat_surat, perihal, isi_surat')
+            ->from('t_suratkeluar as sk')
+            ->join('t_sifat as sif', 'sif.id = sk.sifat_surat')
+            ->join('t_jenis as jen', 'jen.id = sk.jenis_surat')
+            ->where([$this->req->encKey('sk.id') => $id])
+            ->get()->row();
+        // $surat = $this->db->get_where($this->table, $this->req->id($id))->row();
+        // $this->req->print($surat);
+        return $surat;
     }
 
     function update($data, $where)

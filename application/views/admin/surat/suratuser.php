@@ -70,19 +70,19 @@
             </div>
             <form id="formAddTindakanInternal">
                 <div class="modal-body">
-                    
+
                     <!-- disposisi -->
-                    <input type="hidden" value="" id="disposisiNa" name="disposisi">
+                    <input type="" value="" id="disposisiNa" name="disposisi">
                     <!-- jabatan terkait -->
-                    <input type="hidden" value="" id="jabatanTerkait" name="jabatan_terkait">
+                    <input type="" value="" id="jabatanTerkait" name="jabatan_terkait">
                     <!-- id surat -->
-                    <input type="hidden" id="idSurat" name="id_surat">
+                    <input type="" id="idSurat" name="id_surat">
                     <!-- id user  -->
-                    <input type="hidden" value="<?= $this->session->userdata('id_user');?>" id="" name="id_user">
+                    <input type="" value="<?= $this->session->userdata('id_user'); ?>" id="" name="id_user">
                     <!-- id jabatan user -->
-                    <input type="hidden" value="<?= $this->session->userdata('jabatan');?>" id="idUserJabatan" name="id_user_jabatan">
+                    <input type="" value="<?= $this->session->userdata('jabatan'); ?>" id="idUserJabatan" name="id_user_jabatan">
                     <!-- id tujuan -->
-                    <input type="hidden" id="userTujuan" name="user_tujuan">
+                    <input type="" id="userTujuan" name="user_tujuan">
 
                     <div class="form-group">
                         <label>Perihal</label>
@@ -96,8 +96,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Lampiran</label>
+                        <input type="file" class="form-control" name="lampiran">
+                    </div>
+
+                    <div class="form-group">
                         <label>Catatan</label>
                         <textarea name="catatan" id="catatan" class="summernote" cols="30" rows="10"></textarea>
+                        <textarea style="display:none;" name="catatan" id="catatanNa"></textarea>
                     </div>
 
 
@@ -131,11 +137,11 @@
                         <input type='text' name='' id='aksiNa' required>
                     </div>
 
-                    <input type="hidden" value="" name="user_tujuan" class="form-control" id="valAksi">
+                    <input type="" value="" name="user_tujuan" class="form-control" id="valAksi">
 
-                    <input type="hidden" id="akiKirimNa">
-                    <input type="hidden" id="userTerkait">
-                    <input type="hidden" name="jabatan_terkait" id="totalAksi">
+                    <input type="" id="akiKirimNa">
+                    <input type="" id="userTerkait">
+                    <input type="" name="jabatan_terkait" id="totalAksi">
 
                     <div class="form-group">
                         <label>Tanggal Disposisi</label>
@@ -155,7 +161,8 @@
 
                     <div class="form-group">
                         <label>Catatan</label>
-                        <textarea name="catatan" id="catatan" class="summernote" cols="30" rows="10"></textarea>
+                        <textarea id="catatan1" class="summernote" cols="30" rows="10"></textarea>
+                        <textarea style="display:none;" name="catatan" id="catatan1Na"></textarea>
                     </div>
 
 
@@ -167,4 +174,4 @@
             </form>
         </div>
     </div>
-</div>
+</div>  

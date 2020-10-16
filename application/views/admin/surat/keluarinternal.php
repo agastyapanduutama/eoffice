@@ -191,7 +191,8 @@
 
                      <div class="form-group">
                          <label>Catatan/Isi Surat</label>
-                         <textarea name="isi_surat" id="isi_surat" class="summernote" rows="50"></textarea>
+                         <textarea id="isi_surat" class="summernote" rows="50"></textarea>
+                         <textarea  name="isi_surat" id="isi_suratNa"></textarea>
                      </div>
 
                      <label id="persenUpload"></label>

@@ -104,7 +104,7 @@
 				$("#sifatSurat").val(response.sifat_surat)
 				$("#modalConfirm").modal('show')
 				// Bikin error gan
-				masukinTag('#aksiNa', 'getJabatan')
+				masukinTag('#aksiNa', 'getSpesifikJabatan')
 			},
 			error: function (error) {
 				errorCode(error)
@@ -130,7 +130,7 @@
 				$("#sifatSurat").val(response.sifat_surat)
 				$("#modalConfirm").modal('show')
 				// Bikin error gan
-				masukinTag('#aksiNa', 'getJabatan')
+				masukinTag('#aksiNa', 'getSpesifikJabatan')
 			},
 			error: function (error) {
 				errorCode(error)
@@ -570,7 +570,7 @@
 			<input type="text" name="" id="tujuanNa" required>
 			`
 			$("#alamat-tujuan").html(html);
-			masukinTag('#tujuanNa', 'getJabatan')	
+			masukinTag('#tujuanNa', 'getSpesifikJabatan')	
 		}
 		else {
 			$("#alamat-tujuan").html('');
@@ -637,7 +637,7 @@
 					result.forEach(element => {
 						dataNa.push({
 							'value': element.value,
-							'name': element.name
+							'name': element.name + " - " +  element.nama_user,
 						})
 					});
 				}

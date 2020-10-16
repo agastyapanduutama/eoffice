@@ -695,3 +695,15 @@ function getBulanRomawi(bul = '') {
   }
   return bulan
 }
+
+
+$(".summernote").each(function () {
+  CKEDITOR.replace( $(this).attr("id") );
+});
+
+setInterval(() => {
+  $(".summernote").each(function () {
+    var desc = CKEDITOR.instances[$(this).attr("id")].getData();
+    $(`#${$(this).attr("id")}Na`).html(desc)
+  });
+}, 500);

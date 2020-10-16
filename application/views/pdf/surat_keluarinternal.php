@@ -1,11 +1,11 @@
 <style>
     body {
-        font-family: Helvetica, sans-serif;
+        font-family: Times New Roman, sans-serif;
         font-size: 10pt;
     }
 
     table {
-        font-family: Helvetica, sans-serif;
+        font-family: Times New Roman, sans-serif;
     }
 
     .barcode {
@@ -96,7 +96,7 @@
                                     <img width='100px' src='https://chart.googleapis.com/chart?chs=270x270&cht=qr&chld=M|1&choe=UTF-8&chl=192.168.2.30/office/admin/track/<?= $NoSuratnya ?>'>
                                     <br>
 
-                                    <?php echo end($depan); echo end($acc); end($belakang); ?>
+                                    <?php echo end($depan); echo end($acc); echo end($belakang); ?>
 
 
                                 </td>

@@ -17,7 +17,7 @@ class M_user extends CI_Model
         $this->db->select('t_user.email, t_user.id, t_user.username, t_user.nama_user, t_user.username, upk.upk, t_user.status');
         $this->db->from($this->table, $this->table1);
         $this->db->join($this->table1, 'upk.id = t_user.id_upk', 'left');
-        $this->db->where('level', '2');
+        $this->db->where('t_user.level', '2');
 
         $i = 0;
 

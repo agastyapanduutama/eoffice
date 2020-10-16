@@ -1,11 +1,11 @@
 <style>
     body {
-        font-family: Helvetica, sans-serif;
+        font-family: Times New Roman, sans-serif;
         font-size: 10pt;
     }
 
     table {
-        font-family: Helvetica, sans-serif;
+        font-family: Times New Roman, sans-serif;
     }
 
     .barcode {
@@ -49,27 +49,28 @@
         <table style='width:100%;border-collapse: collapse;' border='0'>
             <tr>
                 <td style='padding:5px;font-size:12px;text-align:left;vertical-align:top;'>
-                <img src='<?= base_url('uploads/config/logostikes.png') ?>' width='50' alt=''>
+                <img src='<?= base_url('uploads/config/') ?><?= $surat->logo ?>' width='90' alt=''>
                 </td>
                 <td style='width:100%;padding:5px;text-align:center; '>
                     <h2 style='margin-top:200px'>
-                        Sekolah Tinggi Ilmu Kesehatan <br> Bakti Tunas Husada
-                    </h2>
-                    <h5>Jl. Cilolohan No. 36 Telp. (0265)334740 Fax. (0265)327224 Tasik Malaya 46115 <br> Website :
-                        www.stikes-bth.ac.id Email : mail@stikes-bth.ac.id</h5>
+                        <?php echo $namaupk; ?>
+                    </h2><br>
+                     <h5><?php echo $alamatupk; ?>Telp. <?php echo $telp1 ?> <br> Website :
+                        www.stikes-bth.ac.id Email : <?php echo $emailupk ?></h5>
                 </td>
                 <td style='padding:5px;font-size:12px;text-align:right;vertical-align:top;'>
-                    <img src='<?= base_url('uploads/config/') ?><?= $surat->logo ?>' width='50' alt=''>
                 </td>
             </tr>
         </table>
+        <hr>
     </htmlpageheader>
-
+<br><br>
     <htmlpagefooter name="MyFooter2">
         <!-- <h1>hohoho</h1> -->
     </htmlpagefooter>
 
     <htmlpagefooter name="MyFooter1">
+        <br>
         <table style='width:100%;border-collapse: collapse;border-spacing: 0;' border='0'>
             <tr>
                 <td style='width:50%;'>
@@ -86,7 +87,8 @@
                             ?>
 
                                 <td>
-                                    <img src='<?= base_url('uploads/config/logostikes.png') ?>' width='50' alt=''>
+                                    <img src='<?= base_url('uploads/config/') ?><?= $surat->logo ?>' width='50' alt=''>
+                                    <!-- <img src='<?= base_url('uploads/config/logostikes.png') ?>' width='50' alt=''> -->
                                 </td>
                                 <td style='padding:5px;vertical-align:center;text-align:center;' colspan='2'>
                                     Ditandatangani secara elektronik oleh:
@@ -96,7 +98,7 @@
                                     <img width='100px' src='https://chart.googleapis.com/chart?chs=270x270&cht=qr&chld=M|1&choe=UTF-8&chl=192.168.2.30/office/admin/track/<?= $NoSuratnya ?>'>
                                     <br>
 
-                                    <?php echo end($depan); echo end($acc); end($belakang); ?>
+                                    <?php echo end($depan); echo end($acc); echo end($belakang); ?>
 
 
                                 </td>
@@ -148,10 +150,8 @@
         </table>
         <table style='width:100%;border-collapse: collapse;border-spacing: 0;' border='0'>
             <tr>
-                <td style='width:60%;'>
-                </td>
                 <td style='width:40%;padding:5px;text-align:justify; '>
-                    <table style='width:100%;border-collapse: collapse;font-size:12px;border-spacing: 0;float:right;'>
+                    <table style='width:100%;border-collapse: collapse;font-size:10pt;border-spacing: 0;float:right;'>
                         <tr>
                             <td colspan='3'><?= $surat->no_surat ?></td>
                         </tr>
@@ -191,6 +191,9 @@
                 <?php } ?>
             </tr>
             </td>
+
+                <td style='width:60%;'>
+                </td>
             </tr>
         </table>
 
@@ -212,19 +215,11 @@
     <?php if ($surat->tembusan != ''): ?>
     <div class="tembusan">
         <ol>
-            Tembusan : <?php foreach ($tembusan as $key) : ?>
+            <?php foreach ($tembusanNa as $key): ?>
                 <li>
                     <?= $key ?>
                 </li>
             <?php endforeach ?>
-        </ol>
-    </div>    
-    <?php endif ?>
-
-    <?php if ($surat->tembusan != ''): ?>
-    <div class="tembusan">
-        <ol>
-                <?php echo $tembusan; ?>
         </ol>
     </div>    
     <?php endif ?>

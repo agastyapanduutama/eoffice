@@ -324,6 +324,19 @@ class M_surat extends CI_Model
         return $query->result();
     }
 
+    function data_jabatan_spesifik()
+    {
+        $this->db->select('t_user.id as value, jabatan as name, nama_user ');
+        $this->db->from('t_user');
+        $this->db->join('t_jabatan', 't_jabatan.id = t_user.id_jabatan', 'left');
+        $this->db->order_by('t_jabatan.jabatan', 'ASC');
+        $this->db->where('t_user.id_upk', $this->session->userdata('upk'));
+        $this->db->where('t_user.id != ', $this->session->jabatan);
+        $this->db->where('t_user.level', 3);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     //  function data_jabatan($where = null)
     // {
     //     $this->db->select('*');

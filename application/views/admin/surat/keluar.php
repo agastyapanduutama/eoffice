@@ -125,7 +125,7 @@
                              <label>Tanda Tangan Pejabat</label>
                              <select class="form-control" name="ttd_pejabat">
                                  <option disabled >-- Pilih Tandatangan --</option>
-                                 <option value="1" selected>ketua UPK</option>
+                                 <option value="1" selected>ketua <?php echo $this->db->get_where('t_upk',['id' => $this->session->userdata('upk')])->row()->upk; ?></option>
                                  <!-- <option value="2">ketua Yayasan</option> -->
                                  <?php foreach ($jabatan as $key):?>
                                  <!-- <option value="<?= $key->id?>"> <?= $key->jabatan?> - <?= $key->nama_user?> </option> -->
@@ -164,7 +164,8 @@
 
                      <div class="form-group">
                          <label>Catatan/Isi Surat</label>
-                         <textarea name="isi_surat" id="isi_surat" class="summernote" rows="50"></textarea>
+                         <textarea id="isi_surat" class="summernote" rows="50"></textarea>
+                         <textarea  name="isi_surat" id="isi_suratNa"></textarea>
                      </div>
 
                      <label id="persenUpload"></label>

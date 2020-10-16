@@ -25,7 +25,7 @@ class C_surat extends CI_Controller
         $jabatan = $this->surat->data_jabatan();
         $user = $this->surat->data_user();
         $data = array(
-            'title'  => 'Surat Admin Masuk',
+            'title'  => 'Terima Surat Masuk',
             'jabatan' => $jabatan,
             'user'   => $user,
             'menu'   => 'surat-masuk',
@@ -115,11 +115,13 @@ class C_surat extends CI_Controller
             // $idNa = $this->req->acak($field->id);
             $idNa = $field->id;
             if ($tipe == 'user') {
+
                 if ($field->disposisi == '1'  && $field->status_suratmasuk = '1' && $field->internal == '0') {
                     $button = "
                     <button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas'><i class='fas fa-eye' ></i></button>
                     <button class='btn btn-info btn-sm' id='arsip' data-id='$idNa' title='Arsipkan Surat'><i class='fas fa-file-archive' ></i></button>
                     <button class='btn btn-success btn-sm' id='confirm' data-id='$idNa' title='Disposisi Surat'><i class='fas fa-check-circle' ></i></button>
+
                     ";  
                 }elseif ($field->disposisi == '1' && $field->status_suratmasuk = '1' && $field->internal == '1') {
                     $button = "
@@ -135,12 +137,14 @@ class C_surat extends CI_Controller
                     $button = "
                     <button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas'><i class='fas fa-eye' ></i></button>
                     <button class='btn btn-success btn-sm' id='confirmMasuk' data-id='$idNa' title='Disposisi Surat Internal'><i class='fas fa-check-circle' ></i></button>
-                    <button class='btn btn-info btn-sm' id='kirimUlang' data-id='$idNa' title='Kirim Kembali Surat'><i class='fas fa-paper-plane' ></i></button>    
+                    <button class='btn btn-light btn-sm' id='kirimUlang' data-id='$idNa' title='Kirim Kembali Surat'><i class='fas fa-paper-plane' ></i></button>    
+
                     ";
                 } else {
                     $button = "<button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas'><i class='fas fa-eye' title='Lihat Berkas' ></i></button>
-                      <button class='btn btn-success btn-sm' id='confirmMasuk' data-id='$idNa' title='Disposisi Surat Internal'><i class='fas fa-check-circle' ></i></button>
-                    <button class='btn btn-info btn-sm' id='arsip' data-id='$idNa' title='Arsipkan Surat'><i class='fas fa-file-archive' title='Arsipkan Surat' ></i></button>";
+                        <button class='btn btn-success btn-sm' id='confirmMasuk' data-id='$idNa' title='Disposisi Surat Internal'><i class='fas fa-check-circle' ></i></button>
+                    <button class='btn btn-info btn-sm' id='arsip' data-id='$idNa' title='Arsipkan Surat'><i class='fas fa-file-archive' title='Arsipkan Surat' ></i></button>
+                    <button class='btn btn-light btn-sm' id='kirimUlang' data-id='$idNa' title='Kirim Kembali Surat'><i class='fas fa-paper-plane' ></i></button>    ";
                 }
             } else {
                 $button = "
@@ -151,7 +155,7 @@ class C_surat extends CI_Controller
 
             if ($field->internal == 1 && $field->disposisi == '0') {
                  $button = "
-                <button class='btn btn-info btn-sm' id='kirimUlang' data-id='$idNa' title='Kirim Kembali Surat'><i class='fas fa-paper-plane' ></i></button>  
+                <button class='btn btn-light btn-sm' id='kirimUlang' data-id='$idNa' title='Kirim Kembali Surat'><i class='fas fa-paper-plane' ></i></button>  
                 <button class='btn btn-primary btn-sm' id='lihat' data-id='$idNa' title='Lihat Berkas Surat Masuk'><i class='fas fa-eye'></i></button>
             ";
             }elseif ($field->internal == 1 && $field->disposisi == null) {
@@ -223,6 +227,11 @@ class C_surat extends CI_Controller
     function getJabatan()
     {
         echo json_encode($this->surat->data_jabatan());
+    }
+
+    function getSpesifikJabatan()
+    {
+        echo json_encode($this->surat->data_jabatan_spesifik());
     }
 
     function getUpk()

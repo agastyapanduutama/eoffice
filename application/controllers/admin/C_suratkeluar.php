@@ -227,8 +227,17 @@ class C_suratkeluar extends CI_Controller
             'id_user' => $this->session->id_user,
             'notif' => $buatNotif
         ];
+
+       $config = [
+            'path' => 'surat',
+            'file' => 'lampiran',
+            'encrypt' => false,
+            'type' => 'doc',
+            'customInput' => $custom
+        ];
+
+        $data = $this->req->upload_form_multi($config);
         
-        $data = $this->req->all($custom);
         if ($this->surat->insert($data) == true) {
 
             $historiSurat = array(

@@ -57,7 +57,7 @@ class C_login extends CI_Controller
                     'upk' => $userData->id_upk,
                     'nama_user' => $userData->nama_user,
                     'pembina' => $pembina,
-                    'levelUpk' => $upkLevel->level,
+                    'levelUpk' => (isset($upkLevel->level)) ? $upkLevel->level : "0",
                     $token => true,
                     'token' => $token
                 );

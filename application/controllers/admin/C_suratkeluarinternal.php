@@ -243,7 +243,15 @@ class C_suratkeluarinternal extends CI_Controller
             'notif'             => $buatNotif
         ];
 
-        $data = $this->req->all($custom);
+        $config = [
+            'path' => 'surat',
+            'file' => 'lampiran',
+            'encrypt' => false,
+            'type' => 'doc',
+            'customInput' => $custom
+        ];
+
+        $data = $this->req->upload_form_multi($config);
 
         // echo $pej2;
         // var_dump($data);

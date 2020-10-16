@@ -34,7 +34,8 @@
 
 
     <!-- Summernote -->
-    <link rel="stylesheet" href="<?= base_url() ?>assets/summernote/summernote-bs4.css">
+    <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/summernote/summernote-bs4.css"> -->
+
 
     <style type="text/css">
         html {
@@ -307,12 +308,13 @@
                                     <a href="<?= base_url('admin/surat/masuk') ?>" class="dropdown-item has-icon" id="menu-masuk">
                                         <i class="fas fa-reply"></i> Terima Surat Masuk 
                                     </a>
-
+                                    
+                                    <a href="<?= base_url('admin/surat/keluar') ?>" class="dropdown-item has-icon" id="menu-keluar">
+                                        <i class="fas fa-share"></i> Buat Surat Keluar
+                                    </a>
 
                                 <?php endif ?>
-                                <a href="<?= base_url('admin/surat/keluar') ?>" class="dropdown-item has-icon" id="menu-keluar">
-                                    <i class="fas fa-share"></i> Buat Surat Keluar
-                                </a>
+                                
                             </div>
                         </li>
 
@@ -482,11 +484,11 @@
         <script src="<?= base_url() ?>assets/modules/sweetalert.min.js"></script>
 
         <!-- CK Editor -->
-        <!-- <script src="<?= base_url() ?>assets/ckeditor/ckeditor.js"></script> -->
+        <script src="<?= base_url() ?>assets/ckeditor/ckeditor.js"></script>
 
 
         <!-- Summernote -->
-        <script src="<?= base_url() ?>assets/summernote/summernote-bs4.js"></script>
+        <!-- <script src="<?= base_url() ?>assets/summernote/summernote-bs4.js"></script> -->
 
         <!-- Template JS File -->
         <script src="<?= base_url() ?>assets/admin/assets/js/scripts.js"></script>
